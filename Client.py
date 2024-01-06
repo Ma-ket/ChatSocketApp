@@ -29,6 +29,11 @@ class Client:
         send_len = self._sock.sendto(data.encode('utf-8'), addr)
         return send_len
 
+    def recieve_packet(self, size):
+        data, addr = self._sock.recvfrom(size)
+        data = json.loads(data.encode('utf-8'))
+        return data, addr
+
     def close(commnet=""):
         """ 終了処理 """
         self._sock.close()
