@@ -4,6 +4,7 @@ import json
 from Packet import Packet
 
 class Client:
+    SIZE = 1024
     self._pckt = None
     self._sock = None
 
@@ -40,10 +41,10 @@ class Client:
         print("send the packet completely")
         return send_len
 
-    def recieve_packet(self, size):
+    def recieve_packet(self):
         """ パケットの受信 """
         try:
-            data, addr = self._sock.recvfrom(size)
+            data, addr = self._sock.recvfrom(SIZE)
             data = json.loads(data.encode('utf-8'))
             return data, addr
         except KeyboardInterrupt:
