@@ -1,27 +1,26 @@
 class Packet:
-    _app = None
-    _name = None
-    _type = None
-    _registered = False
-    _comment = None
-
     def __init__(self, app, put_type=None):
-        self._app = app
-        self._type = put_type
+        """ コンストラクタ """
+        self.app = app
+        self.type = put_type
 
     def set_packetdata(self, name=None, registered=False, comment=None):
         """ パケットの設定 """
-        self._name = self._name if (name is None) else name
-        self._registered = registered
-        self._comment = comment
+        self.name = self.name if (name is None) else name
+        self.registered = registered
+        self.comment = comment
 
     def get_packetdata(self):
         """ パケットの取得 """
         data = {
-            "app" : self._app,
-            "user_name" :self._name,
-            "type" : self._type,
-            "registered" : self._registered,
-            "comment" : self._comment
+            "app" : self.app,
+            "username" :self.name,
+            "type" : self.type,
+            "registered" : self.registered,
+            "comment" : self.comment
         }
         return data
+
+if __name__ == "__main__":
+    p = Packet("client", "input")
+    print(p)
