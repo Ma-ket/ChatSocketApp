@@ -10,11 +10,13 @@ class Packet:
         self._type = put_type
 
     def set_packetdata(self, name=None, registered=False, comment=None):
+        """ パケットの設定 """
         self._name = self._name if (name is None) else name
         self._registered = registered
         self._comment = comment
 
     def get_packetdata(self):
+        """ パケットの取得 """
         data = {
             "app" : self._app,
             "user_name" :self._name,
