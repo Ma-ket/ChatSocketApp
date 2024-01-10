@@ -43,14 +43,11 @@ class Server_Run(Server):
 
             if (comment == "end" or comment == "logout"):
                 self.logout_process(username)
+                return
 
             # chat
             print(f"{username}: {comment}")
-            # 出力appが存在するかどうか
-            if ((destaddr := self.user_addrs[username][1]) is not None):  # 存在する
-                # 出力appに送信
-                self.pckt.set_packetdata(name=username, comment=comment)
-        pass
+            pass
 
     def username_dupplicate(self, data):
         """ 入力appが被ってしまった、入力appは複数存在してはいけないため """
