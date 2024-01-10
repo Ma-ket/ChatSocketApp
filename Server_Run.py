@@ -3,6 +3,7 @@ import socket
 import json
 from Packet import Packet
 from Server import Server
+from User_Addresses import User_Addresses
 
 class Server_Run(Server):
     def __init__(self):
@@ -10,7 +11,7 @@ class Server_Run(Server):
         self.pckt = None
         self.sock = None
         super().__init__()  # 継承元からオーバーライド
-        self.user_addrs = dict()  # userのaddrを管理する変数　dict(tuple(clin, list(clouts)))
+        self.user_addr = User_Addresses()
 
     def run(self):
         """ 実行 """
@@ -18,7 +19,7 @@ class Server_Run(Server):
             data, client_addr = super().recieve_packet()  # パケットの受信
             try:
                 self.analyze(data, client_addr)
-                return
+                return  # debug
             except KeyboardInterrupt:
                 super().close("stop program at [run]")
 
@@ -28,12 +29,17 @@ class Server_Run(Server):
             pass  # 何もしない
         else:
             username = data["username"]
-            if (username in self.user_addrs):  # 既に登録されている
-                if (data["type"] == "input"):
-                    self.type_input(dataa, addr)
-                elif (data["type"] == "output"):
+            put_type = data["type"]
+            if (self.user_addr.name_exists(username)):  # 既に登録されている
+                if (put_type == "input"):
+                    self.type_input(data, addr)
                     pass
-            pass
+                elif (put_type == "output"):
+                    pass
+            else:
+                # 新規登録
+                self.new_registation(username, addr, put_type)
+                pass
 
     def type_input(self, data, addr):
         if (data["registerd"] == False):  # user名が被った
@@ -70,6 +76,13 @@ class Server_Run(Server):
         # 出力appに終了処理を指示
         for addr in cl_out_addrs:
             super().send_packet(data, addr)
+
+    def new_registation(self, name, addr, put_type):
+        self.user_addr.create_user_dict(name)
+        if (put_type == "input"):
+            self.user_addr.set_addr(name, type_input=addr)
+        elif (put_type == "output"):
+            self.user_addr.set_addr(name, type_output=addr)
 
 if __name__ == "__main__":
     server = Server_Run()
