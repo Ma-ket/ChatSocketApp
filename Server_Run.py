@@ -32,7 +32,7 @@ class Server_Run(Server):
             put_type = data["type"]
             if (self.user_addr.name_exists(username)):  # 既に登録されている
                 if (put_type == "input"):
-                    self.type_input(data, addr)
+                    self.type_input(data)
                     pass
                 elif (put_type == "output"):
                     pass
@@ -41,9 +41,11 @@ class Server_Run(Server):
                 self.new_registation(username, addr, put_type)
                 pass
 
-    def type_input(self, data, addr):
+    def type_input(self, data):
+        """ 入力app側の処理 """
+        username = data["username"]
         if (data["registerd"] == False):  # user名が被った
-            self.username_dupplicate(data, addr)
+            self.username_dupplicate(username)
         else:
             comment = data["comment"]
 
@@ -55,17 +57,16 @@ class Server_Run(Server):
             print(f"{username}: {comment}")
             pass
 
-    def username_dupplicate(self, data):
+    def username_dupplicate(self, name):
         """ 入力appが被ってしまった、入力appは複数存在してはいけないため """
-        username = data["username"]
-        comment = f"@{username} has already dupplicated."
+        comment = f"@{name} has already dupplicated."
+        addr = self.user_addr(name)
 
         # 該当入力appにそのuser名は使えないと伝達
-        another_data = super().create_packet(username, comment=comment)
+        another_data = super().create_packet(name, comment=comment)
         super().send_packet(another_data, addr)
 
     def logout_process(self, username):
-        username = data["username"]
         comment = "end"
         data = super().create_packet(username, True, comment)
 
