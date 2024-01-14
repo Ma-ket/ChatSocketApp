@@ -42,6 +42,7 @@ class Server_Run(Server):
                 pass
 
     def type_input(self, data, addr):
+        """ 入力app側の処理 """
         if (data["registerd"] == False):  # user名が被った
             self.username_dupplicate(data, addr)
         else:
@@ -65,6 +66,7 @@ class Server_Run(Server):
         super().send_packet(another_data, addr)
 
     def logout_process(self, username):
+        """ 対象userのlogoutを実行する """
         username = data["username"]
         comment = "end"
         data = super().create_packet(username, True, comment)
@@ -78,6 +80,7 @@ class Server_Run(Server):
             super().send_packet(data, addr)
 
     def new_registation(self, name, addr, put_type):
+        """ userの新規登録 """
         self.user_addr.create_user_dict(name)
         if (put_type == "input"):
             self.user_addr.set_addr(name, type_input=addr)
