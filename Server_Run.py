@@ -1,17 +1,15 @@
 import sys
 import socket
 import json
-from Packet import Packet
 from Server import Server
-from User_Addresses import User_Addresses
 
 class Server_Run(Server):
     def __init__(self):
         """ コンストラクタ """
         self.pckt = None
         self.sock = None
+        self.user_addr = None
         super().__init__()  # 継承元からオーバーライド
-        self.user_addr = User_Addresses()
 
     def run(self):
         """ 実行 """

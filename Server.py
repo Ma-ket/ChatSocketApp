@@ -2,6 +2,7 @@ import sys
 import socket
 import json
 from Packet import Packet
+from User_Addresses import User_Addresses
 
 class Server:
     SIZE = 1024
@@ -13,6 +14,7 @@ class Server:
         self.sock = socket.socket(socket.AF_INET, type=socket.SOCK_DGRAM)
         self.sock.bind(localaddr)
         print(f"server addr: {localaddr[0]}, port: {localaddr[1]}")
+        self.user_addr = User_Addresses()
 
     def run(self):
         """ 実行 """
