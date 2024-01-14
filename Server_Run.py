@@ -44,6 +44,7 @@ class Server_Run(Server):
         if (data["registerd"] == False):  # user名が被った
             self.username_dupplicate(data, addr)
         else:
+            username = data["username"]
             comment = data["comment"]
 
             if (comment == "end" or comment == "logout"):
@@ -51,7 +52,7 @@ class Server_Run(Server):
                 return
 
             # chat
-            print(f"{username}: {comment}")
+            self.chat(username, comment)
             pass
 
     def username_dupplicate(self, data):
@@ -76,6 +77,9 @@ class Server_Run(Server):
         # 出力appに終了処理を指示
         for addr in cl_out_addrs:
             super().send_packet(data, addr)
+
+    def chat(name, comment):
+        print(f"{name}: {comment}")
 
     def new_registation(self, name, addr, put_type):
         """ userの新規登録 """
