@@ -43,17 +43,20 @@ class Server_Run(Server):
         """ 入力app側の処理 """
         if (data["registerd"] == False):  # user名が被った
             self.username_dupplicate(data, addr)
-        else:
-            username = data["username"]
-            comment = data["comment"]
+            return
+        name = data["username"]
+        comment = data["comment"]
 
-            if (comment == "end" or comment == "logout"):
-                self.logout_process(username)
-                return
+        if (comment == "end" or comment == "logout"):
+            self.logout_process(name)
+            return
+        # chat
+        self.chat(name, comment)
 
-            # chat
-            self.chat(username, comment)
-            pass
+        # 出力appが存在するのか
+        for dest_addr in self.user_addr.get_addr(name, "output"):
+            data = super().create_packet(name, True, comment)
+            super().send_packet(data, dest_addr)
 
     def username_dupplicate(self, data):
         """ 入力appが被ってしまった、入力appは複数存在してはいけないため """
@@ -79,6 +82,7 @@ class Server_Run(Server):
             super().send_packet(data, addr)
 
     def chat(name, comment):
+        """ chat """
         print(f"{name}: {comment}")
 
     def new_registation(self, name, addr, put_type):
