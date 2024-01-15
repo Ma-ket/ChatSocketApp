@@ -46,14 +46,13 @@ class Server_Run(Server):
             return
         name = data["username"]
         comment = data["comment"]
-
         if (comment == "end" or comment == "logout"):
             self.logout_process(name)
             return
         # chat
         self.chat(name, comment)
 
-        # 出力appが存在するのか
+        # 出力appにchatの内容を反映する
         for dest_addr in self.user_addr.get_addr(name, "output"):
             data = super().create_packet(name, True, comment)
             super().send_packet(data, dest_addr)
