@@ -2,6 +2,7 @@ import sys
 import socket
 import json
 from Packet import Packet
+from User_Addresses import User_Addresses
 
 class Server:
     SIZE = 1024
@@ -13,6 +14,7 @@ class Server:
         self.sock = socket.socket(socket.AF_INET, type=socket.SOCK_DGRAM)
         self.sock.bind(localaddr)
         print(f"server addr: {localaddr[0]}, port: {localaddr[1]}")
+        self.user_addr = User_Addresses()
 
     def run(self):
         """ 実行 """
@@ -39,7 +41,7 @@ class Server:
         """ パケットの受信 """
         try:
             data, client_addr = self.sock.recvfrom(self.SIZE)
-            data = json.loads(data.encode('utf-8'))
+            data = json.loads(data.decode('utf-8'))
             return data, client_addr
         except KeyboardInterrupt:
             self.close("stop program at [recieve_packet]")
