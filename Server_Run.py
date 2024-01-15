@@ -31,9 +31,8 @@ class Server_Run(Server):
             if (self.user_addr.name_exists(username)):  # 既に登録されている
                 if (put_type == "input"):
                     self.type_input(data, addr)
-                    pass
                 elif (put_type == "output"):
-                    pass
+                    self.type_output(data, addr)
             else:
                 # 新規登録
                 self.new_registation(username, addr, put_type)
@@ -84,13 +83,23 @@ class Server_Run(Server):
         """ chat """
         print(f"{name}: {comment}")
 
+    def type_output(self, data, addr):
+        name = data["username"]
+        if (data["registerd"] == False):
+            self.user_addr.set_addr(name, type_output=addr)
+            # print(f"@{name}'s input/output are connected.")
+        else:
+            pass  # 何もしない
+
     def new_registation(self, name, addr, put_type):
         """ userの新規登録 """
         self.user_addr.create_user_dict(name)
         if (put_type == "input"):
             self.user_addr.set_addr(name, type_input=addr)
+            # print(f"@{name} login as input app.")
         elif (put_type == "output"):
             self.user_addr.set_addr(name, type_output=addr)
+            # print(f"@{name} login as output app.")
 
 if __name__ == "__main__":
     server = Server_Run()
