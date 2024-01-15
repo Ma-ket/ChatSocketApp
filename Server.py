@@ -41,7 +41,7 @@ class Server:
         """ パケットの受信 """
         try:
             data, client_addr = self.sock.recvfrom(self.SIZE)
-            data = json.loads(data.encode('utf-8'))
+            data = json.loads(data.decode('utf-8'))
             return data, client_addr
         except KeyboardInterrupt:
             self.close("stop program at [recieve_packet]")

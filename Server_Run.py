@@ -84,6 +84,7 @@ class Server_Run(Server):
         print(f"{name}: {comment}")
 
     def type_output(self, data, addr):
+        """ 出力app側の処理 """
         name = data["username"]
         if (data["registerd"] == False):
             self.user_addr.set_addr(name, type_output=addr)
