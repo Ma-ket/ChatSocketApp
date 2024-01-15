@@ -31,6 +31,7 @@ class Server_Run(Server):
             if (self.user_addr.name_exists(username)):  # 既に登録されている
                 if (put_type == "input"):
                     self.type_input(data, addr)
+
                 elif (put_type == "output"):
                     self.type_output(data, addr)
             else:
@@ -56,13 +57,13 @@ class Server_Run(Server):
             data = super().create_packet(name, True, comment)
             super().send_packet(data, dest_addr)
 
-    def username_dupplicate(self, data):
+    def username_dupplicate(self, name):
         """ 入力appが被ってしまった、入力appは複数存在してはいけないため """
-        username = data["username"]
-        comment = f"@{username} has already dupplicated."
+        comment = f"@{name} has already dupplicated."
+        addr = self.user_addr(name)
 
         # 該当入力appにそのuser名は使えないと伝達
-        another_data = super().create_packet(username, comment=comment)
+        another_data = super().create_packet(name, comment=comment)
         super().send_packet(another_data, addr)
 
     def logout_process(self, username):
