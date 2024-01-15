@@ -87,7 +87,7 @@ class Server_Run(Server):
         name = data["username"]
         if (data["registerd"] == False):
             self.user_addr.set_addr(name, type_output=addr)
-            # print(f"@{name}'s input/output are connected.")
+            print(f"@{name}'s input/output are connected.")
         else:
             pass  # 何もしない
 
@@ -96,10 +96,10 @@ class Server_Run(Server):
         self.user_addr.create_user_dict(name)
         if (put_type == "input"):
             self.user_addr.set_addr(name, type_input=addr)
-            # print(f"@{name} login as input app.")
+            print(f"@{name} login as input app.")
         elif (put_type == "output"):
             self.user_addr.set_addr(name, type_output=addr)
-            # print(f"@{name} login as output app.")
+            print(f"@{name} login as output app.")
 
 if __name__ == "__main__":
     server = Server_Run()
