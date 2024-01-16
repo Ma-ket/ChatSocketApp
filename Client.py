@@ -10,25 +10,31 @@ class Client:
         self.pckt = Packet("client", None)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    def run(self):
+        pass
+
+    def analyze(self):
+        pass
+
     def input_username(self):
         """ user名の入力 """
         try:
-            username = input(f"user name: ")
-            print(username)
-            return username
+            name = input(f"user name: ")
+            print(f"@{name}")
+            return name
         except KeyboardInterrupt:
             self.close("stop program at [input_username]")
 
-    def input_comment(username):
+    def input_comment(name):
         try:
-            comment = input(f"{username}: ")
+            comment = input(f"{name}: ")
             return comment
         except KeyboardInterrupt:
             self.close("stop program at [input_comment]")
 
-    def create_packet(self, username, registered=False, comment=None):
+    def create_packet(self, name, registered=False, comment=None):
         """ パケットの作成 """
-        self.pckt.set_packetdata(username, registered, comment)
+        self.pckt.set_packetdata(name, registered, comment)
         data = self.pckt.get_packetdata()
         return data
 
