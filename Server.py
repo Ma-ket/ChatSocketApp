@@ -46,6 +46,19 @@ class Server:
         except KeyboardInterrupt:
             self.close("stop program at [recieve_packet]")
 
+    def logout_process(self, name):
+        """ 対象userのlogoutを実行する """
+        comment = "end"
+        data = super().create_packet(name, True, comment)
+
+        # addr
+        client_addrs = self.user_addrs[name]
+        cl_in_addr, cl_out_addrs = client_addrs  # 入力appと出力appに分ける
+
+        # 出力appに終了処理を指示
+        for addr in cl_out_addrs:
+            super().send_packet(data, addr)
+
     def close(message=""):
         """ 終了処理 """
         self.sock.close()
