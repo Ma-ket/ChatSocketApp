@@ -31,7 +31,6 @@ class Server_Run(Server):
             if (self.user_addr.name_exists(username)):  # 既に登録されている
                 if (put_type == "input"):
                     self.type_input(data, addr)
-
                 elif (put_type == "output"):
                     self.type_output(data, addr)
             else:
@@ -47,7 +46,7 @@ class Server_Run(Server):
         name = data["username"]
         comment = data["comment"]
         if (comment == "end" or comment == "logout"):
-            self.logout_process(name)
+            super().logout_process(name)
             return
         # chat
         self.chat(name, comment)
@@ -65,20 +64,6 @@ class Server_Run(Server):
         # 該当入力appにそのuser名は使えないと伝達
         another_data = super().create_packet(name, comment=comment)
         super().send_packet(another_data, addr)
-
-    def logout_process(self, username):
-        """ 対象userのlogoutを実行する """
-        username = data["username"]
-        comment = "end"
-        data = super().create_packet(username, True, comment)
-
-        # addr
-        client_addrs = self.user_addrs[username]
-        cl_in_addr, cl_out_addrs = client_addrs  # 入力appと出力appに分ける
-
-        # 出力appに終了処理を指示
-        for addr in cl_out_addrs:
-            super().send_packet(data, addr)
 
     def chat(name, comment):
         """ chat """

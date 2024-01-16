@@ -1,6 +1,5 @@
 import sys
 import json
-from Packet import Packet
 from Client import Client
 
 class Client_Input(Client):
