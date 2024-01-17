@@ -30,7 +30,7 @@ class Server_Run(Server):
                     self.type_output(data, addr)
             else:
                 # 新規登録
-                self.new_registation(username, addr, put_type)
+                self.new_registration(username, addr, put_type)
                 pass
 
     def type_input(self, data, addr):
@@ -87,7 +87,7 @@ class Server_Run(Server):
         else:
             pass  # 何もしない
 
-    def new_registation(self, name, addr, put_type):
+    def new_registration(self, name, addr, put_type):
         """ userの新規登録 """
         self.user_addr.create_user_dict(name)
         if (put_type == "input"):
