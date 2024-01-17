@@ -25,7 +25,7 @@ class Client:
         except KeyboardInterrupt:
             self.close("stop program at [input_username]")
 
-    def input_comment(name):
+    def input_comment(self, name):
         try:
             comment = input(f"{name}: ")
             return comment
