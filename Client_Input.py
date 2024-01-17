@@ -1,5 +1,3 @@
-import sys
-import json
 from Client import Client
 from Packet import Packet
 
