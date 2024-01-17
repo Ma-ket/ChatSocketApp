@@ -24,8 +24,8 @@ class Client_Input(Client):
         self.recieve_response_username()
 
     def request_username(self, name):
-        """ サーバに名前の重複があるか確認する """
-        data = super().create_packet(name)
+        """ サーバに名前の重複があるかの問い合わせ """
+        data = super().create_packet(name, False)
         super().send_packet(data, SERVER_ADDR)
 
     def recieve_response_username(self):
@@ -33,7 +33,7 @@ class Client_Input(Client):
         while True:
             data, addr = super().recieve_packet()
             if (data["app"] != "server"):
-                pass
+                continue  # 何もしない
             else:
                 if (data["registered"] == False):
                     comment = data["comment"]
@@ -42,6 +42,14 @@ class Client_Input(Client):
                     print("recieved the packet successfully from server!")
                     return
 
+    def post_to_chat(self, name):
+        comment = super().input_comment(name)
+        if (comment == "end" or comment == "logout"):
+            super().close("end this program.")
+        else:
+            data = super().create_packet(name, True, comment)
+            super().send_packet(data, SERVER_ADDR)
+            print("#### packetの送信完了 ####")
 
 if __name__ == "__main__":
     client = Client_Input()
