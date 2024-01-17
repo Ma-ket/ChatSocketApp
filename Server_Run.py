@@ -1,13 +1,8 @@
-import sys
-import socket
-import json
 from Server import Server
 
 class Server_Run(Server):
     def __init__(self):
         """ コンストラクタ """
-        self.pckt = None
-        self.sock = None
         self.user_addr = None
         super().__init__()  # 継承元からオーバーライド
 
