@@ -15,17 +15,21 @@ class Client_Input(Client):
         """ 実行 """
         name = super().input_username()
         print(name)
-
-        self.request_username(name)
-        self.response_username()
+        self.confirm_username_to_server(name)
         pass
+
+    def confirm_username_to_server(name):
+        """ サーバに名前の重複があるか確認する """
+        self.request_username(name)
+        self.recieve_response_username()
 
     def request_username(self, name):
         """ サーバに名前の重複があるか確認する """
         data = super().create_packet(name)
         super().send_packet(data, SERVER_ADDR)
 
-    def response_username(self):
+    def recieve_response_username(self):
+        """ サーバから名前の重複があるかの結果を受け取る """
         while True:
             data, addr = super().recieve_packet()
             if (data["app"] != "server"):
@@ -36,7 +40,7 @@ class Client_Input(Client):
                     super().close(f"error: {comment}")
                 else:
                     print("recieved the packet successfully from server!")
-                    return 0
+                    return
 
 
 if __name__ == "__main__":
