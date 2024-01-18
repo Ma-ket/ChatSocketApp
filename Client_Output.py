@@ -21,7 +21,7 @@ class Client_Output(Client):
     def registration_request(self, name):
         """ 登録の要求、認証 """
         data = super().create_packet(name)
-        super().send_packet(data, SERVER_ADDR)
+        super().send_packet(data, self.SERVER_ADDR)
         print("#### packetの送信完了 ####")
 
     def wait_recieving_packet(self):

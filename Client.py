@@ -48,7 +48,7 @@ class Client:
     def recieve_packet(self):
         """ パケットの受信 """
         try:
-            data, addr = self.sock.recvfrom(SIZE)
+            data, addr = self.sock.recvfrom(self.SIZE)
             data = json.loads(data.encode('utf-8'))
             return data, addr
         except KeyboardInterrupt:

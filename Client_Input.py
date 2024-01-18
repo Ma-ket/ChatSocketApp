@@ -24,7 +24,7 @@ class Client_Input(Client):
     def request_username(self, name):
         """ サーバに名前の重複があるかの問い合わせ """
         data = super().create_packet(name, False)
-        super().send_packet(data, SERVER_ADDR)
+        super().send_packet(data, self.SERVER_ADDR)
 
     def recieve_response_username(self):
         """ サーバから名前の重複があるかの結果を受け取る """
@@ -46,7 +46,7 @@ class Client_Input(Client):
             super().close("end this program.")
         else:
             data = super().create_packet(name, True, comment)
-            super().send_packet(data, SERVER_ADDR)
+            super().send_packet(data, self.SERVER_ADDR)
             print("#### packetの送信完了 ####")
 
 if __name__ == "__main__":
